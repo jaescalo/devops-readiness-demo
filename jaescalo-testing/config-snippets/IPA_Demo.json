@@ -1,0 +1,167 @@
+{
+    "name": "IPA Demo",
+    "children": [
+        {
+            "name": "IPA - Enable",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "advanced",
+                    "options": {
+                        "description": "Enable IPA request to alternate origin",
+                        "xml": "<!-- Enable IPA request to alternate origin -->\n<match:metadata-stage value=\"client-request-body\">  \n  <edgeservices:processing-agent>\n    <log-r-line>on</log-r-line>\n    <host>ipa-www.jaescalo.com</host>\n    <url>/credentials.txt</url>\n  </edgeservices:processing-agent>\n</match:metadata-stage>"
+                    },
+                    "uuid": "a00f9f14-89d7-46db-a40f-b38e5fec6bb2"
+                }
+            ],
+            "uuid": "1fb21954-3d08-4c18-999d-0ef731157be4",
+            "criteria": [
+                {
+                    "name": "hostname",
+                    "options": {
+                        "matchOperator": "IS_NOT_ONE_OF",
+                        "values": [
+                            "ipa-www.jaescalo.com"
+                        ]
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        },
+        {
+            "name": "IPA Origin",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "origin",
+                    "options": {
+                        "originType": "NET_STORAGE",
+                        "netStorage": {
+                            "downloadDomainName": "gsstrip.download.akamai.com",
+                            "cpCode": 405092,
+                            "g2oToken": "405092=6G96eY0RZK5O3Eb2xYVFzfzt8Pn8fZ37Cnv93266KVNB1U6VF1"
+                        }
+                    }
+                },
+                {
+                    "name": "baseDirectory",
+                    "options": {
+                        "value": "/jaescalo/"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "hostname",
+                    "options": {
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "ipa-www.jaescalo.com"
+                        ]
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": "Using the same as the default origin just for demo."
+        },
+        {
+            "name": "IPA Request Details",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "advanced",
+                    "options": {
+                        "description": "Enable IPA response body inspection.",
+                        "xml": "<edgeservices:inspect-response-body.status>on</edgeservices:inspect-response-body.status>"
+                    },
+                    "uuid": "5f7f53b3-f397-4d37-854e-6a845de2de9a"
+                }
+            ],
+            "uuid": "a436978c-7f18-4d44-bce6-44bf2752931c",
+            "criteria": [
+                {
+                    "name": "matchAdvanced",
+                    "options": {
+                        "description": "IPA Request Details",
+                        "openXml": "<match:processing-agent-request host=\"*\">",
+                        "closeXml": "</match:processing-agent-request>"
+                    },
+                    "uuid": "f09273c1-1274-41e7-a071-87b85e4efa50"
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        },
+        {
+            "name": "IPA Response",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "advanced",
+                    "options": {
+                        "description": "",
+                        "xml": "<!-- Check if the IPA response is 200 or not and set status variables. -->\n<match:processing-agent-response host=\"ipa-www.jaescalo.com\">\n  <match:regex select=\"IPA_RESPONSE_STATUS\" regex=\".*\">  \n    <assign:variable>  \n      <name>ET_RESP_HTTP_STATUS</name>  \n      <value>%(AK_SELECT)</value>  \n    </assign:variable>  \n  </match:regex>  \n   \n  <match:response.status value=\"200\" result=\"true\">\n    <assign:variable>\n      <name>PMUSER_IPA_STATUS</name>\n      <value>true</value>\n    </assign:variable>\n    <match:regex flags=\"so\" impl=\"re2\" strict-err-check-re2=\"on\"  regex=\"(.*)\" select=\"IPA_RESPONSE_BODY\" variable-list=\"ORIGIN_RESPONSE_BODY\">\n      <assign:variable>\n        <name>NS_GOOD_RESPONSE_BODY</name>\n        <value>YES</value>\n        <sensitive>off</sensitive>\n      </assign:variable>\n    </match:regex>\n  </match:response.status>\n  \n  <match:response.status value=\"200\" result=\"false\">\n    <assign:variable>\n      <name>PMUSER_IPA_STATUS</name>\n      <value>false</value>\n    </assign:variable>\n  </match:response.status>\n</match:processing-agent-response>"
+                    },
+                    "uuid": "4bc50f2b-cfa1-4619-b6bf-0f8be7d9e6ee"
+                }
+            ],
+            "uuid": "cca46e3d-4a48-4e07-a786-3af64f4c7cec",
+            "criteria": [],
+            "criteriaMustSatisfy": "all"
+        },
+        {
+            "name": "Process Response Body",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "advanced",
+                    "options": {
+                        "description": "",
+                        "xml": "<assign:variable>  \n      <name>PMUSER_NS_RESPONSE_BODY</name>  \n      <value>%(ORIGIN_RESPONSE_BODY)</value>  \n</assign:variable>"
+                    },
+                    "uuid": "63bb9b05-0f7b-4af8-a880-f8fb41101dd3"
+                }
+            ],
+            "uuid": "36a360e3-10ff-49d0-af54-46f900934afb",
+            "criteria": [
+                {
+                    "name": "metadataStage",
+                    "options": {
+                        "matchOperator": "IS",
+                        "value": "ipa-response"
+                    }
+                },
+                {
+                    "name": "matchVariable",
+                    "options": {
+                        "variableName": "PMUSER_IPA_STATUS",
+                        "matchOperator": "IS",
+                        "matchWildcard": false,
+                        "matchCaseSensitive": true,
+                        "variableExpression": "true"
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        }
+    ],
+    "behaviors": [],
+    "criteria": [
+        {
+            "name": "queryStringParameter",
+            "options": {
+                "parameterName": "enableIPA",
+                "matchOperator": "IS_ONE_OF",
+                "values": [
+                    "true"
+                ],
+                "matchWildcardName": false,
+                "matchCaseSensitiveName": true,
+                "matchWildcardValue": false,
+                "matchCaseSensitiveValue": true,
+                "escapeValue": false
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "all",
+    "uuid": "d602f840-6044-4238-9a31-1f92451cdcfa"
+}

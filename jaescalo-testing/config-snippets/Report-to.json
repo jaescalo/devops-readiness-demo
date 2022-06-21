@@ -1,0 +1,26 @@
+{
+    "name": "Report-to",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "modifyOutgoingResponseHeader",
+            "options": {
+                "action": "ADD",
+                "standardAddHeaderName": "OTHER",
+                "headerValue": "{\"max_age\":3600,\"endpoints\":[{\"url\":\"http://jaescalo.test.edgekey-staging.net/report/\"}],\"include_subdomains\":true}",
+                "customHeaderName": "Report-To"
+            }
+        },
+        {
+            "name": "modifyOutgoingResponseHeader",
+            "options": {
+                "action": "ADD",
+                "standardAddHeaderName": "OTHER",
+                "headerValue": "{\"report_to\":\"default\",\"max_age\":3600,\"include_subdomains\":true}",
+                "customHeaderName": "nel"
+            }
+        }
+    ],
+    "criteria": [],
+    "criteriaMustSatisfy": "all"
+}

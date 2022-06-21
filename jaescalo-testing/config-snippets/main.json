@@ -1,0 +1,179 @@
+{
+    "rules": {
+        "name": "default",
+        "children": [
+            "#include:Failover.json",
+            "#include:JSON_Files_Location.json",
+            "#include:Cloud_Monitor_SumoLogic.json",
+            "#include:VP_Maintenance_Pages.json",
+            "#include:IPA_Demo.json",
+            "#include:JWT_Validation.json",
+            "#include:Git.io_Origin.json",
+            "#include:My_Origin.json",
+            "#include:EdgeWorkers.json",
+            "#include:CORS.json",
+            "#include:Report-to.json",
+            "#include:Caching.json",
+            "#include:newpath/CORS_newpath.json",
+            "#include:Conditional_Origin_Group.json"
+        ],
+        "behaviors": [
+            {
+                "name": "origin",
+                "options": {
+                    "originType": "NET_STORAGE",
+                    "netStorage": {
+                        "downloadDomainName": "gsstrip.download.akamai.com",
+                        "cpCode": 405092,
+                        "g2oToken": "405092=6G96eY0RZK5O3Eb2xYVFzfzt8Pn8fZ37Cnv93266KVNB1U6VF1"
+                    }
+                }
+            },
+            {
+                "name": "cpCode",
+                "options": {
+                    "value": {
+                        "id": 407946
+                    }
+                }
+            },
+            {
+                "name": "caching",
+                "options": {
+                    "behavior": "MAX_AGE",
+                    "mustRevalidate": false,
+                    "ttl": "10m"
+                }
+            },
+            {
+                "name": "cacheKeyQueryParams",
+                "options": {
+                    "behavior": "IGNORE_ALL"
+                }
+            },
+            {
+                "name": "baseDirectory",
+                "options": {
+                    "value": "/jaescalo/static-sites/"
+                }
+            },
+            {
+                "name": "allowPost",
+                "options": {
+                    "enabled": true,
+                    "allowWithoutContentLength": true
+                }
+            },
+            {
+                "name": "allHttpInCacheHierarchy",
+                "options": {
+                    "enabled": true
+                }
+            },
+            {
+                "name": "globalRequestNumber",
+                "options": {
+                    "outputOption": "ASSIGN_VARIABLE",
+                    "variableName": "PMUSER_GRN"
+                }
+            },
+            {
+                "name": "datastream",
+                "options": {
+                    "streamType": "BEACON_AND_LOG",
+                    "enabled": true,
+                    "beaconStreamTitle": "",
+                    "datastreamIds": "2779",
+                    "logStreamTitle": "",
+                    "logEnabled": true,
+                    "logStreamName": 14204,
+                    "samplingPercentage": 100
+                }
+            }
+        ],
+        "uuid": "default",
+        "options": {
+            "is_secure": true
+        },
+        "variables": [
+            {
+                "name": "PMUSER_REFERERHASH",
+                "value": "${env.PMUSER_REFERERHASH_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_IPA_STATUS",
+                "value": "${env.PMUSER_IPA_STATUS_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_NS_RESPONSE_BODY",
+                "value": "${env.PMUSER_NS_RESPONSE_BODY_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_TRUE_CLIENT_PORT",
+                "value": "${env.PMUSER_TRUE_CLIENT_PORT_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_EW_DEBUG_KEY",
+                "value": "${env.PMUSER_EW_DEBUG_KEY_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_EWSEARCH",
+                "value": "${env.PMUSER_EWSEARCH_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_EWNEWTEXT",
+                "value": "${env.PMUSER_EWNEWTEXT_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_GRN",
+                "value": "${env.PMUSER_GRN_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_ORIGINAL_GRN",
+                "value": "${env.PMUSER_ORIGINAL_GRN_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_REFERENCE_ERROR",
+                "value": "${env.PMUSER_REFERENCE_ERROR_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            },
+            {
+                "name": "PMUSER_CACHE_KEY",
+                "value": "${env.PMUSER_CACHE_KEY_value}",
+                "description": "",
+                "hidden": false,
+                "sensitive": false
+            }
+        ],
+        "comments": "The behaviors in the Default Rule apply to all requests for the property hostname(s) unless another rule overrides the Default Rule settings."
+    }
+}

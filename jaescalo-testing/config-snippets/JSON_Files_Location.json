@@ -1,0 +1,25 @@
+{
+    "name": "JSON Files Location",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "baseDirectory",
+            "options": {
+                "value": "/jaescalo/json_files/"
+            }
+        }
+    ],
+    "criteria": [
+        {
+            "name": "filename",
+            "options": {
+                "matchOperator": "IS_ONE_OF",
+                "values": [
+                    "inline.json"
+                ],
+                "matchCaseSensitive": true
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "all"
+}

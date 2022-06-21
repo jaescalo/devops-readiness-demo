@@ -1,0 +1,23 @@
+{
+    "name": "CORS",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "corsSupport",
+            "options": {
+                "enabled": true,
+                "allowOrigins": "ANY",
+                "allowCredentials": false,
+                "allowHeaders": "ANY",
+                "methods": [
+                    "GET",
+                    "POST"
+                ],
+                "exposeHeaders": [],
+                "preflightMaxAge": "600s"
+            }
+        }
+    ],
+    "criteria": [],
+    "criteriaMustSatisfy": "all"
+}

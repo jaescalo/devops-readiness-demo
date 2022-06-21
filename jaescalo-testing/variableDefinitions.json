@@ -1,0 +1,48 @@
+{
+    "definitions": {
+        "PMUSER_REFERERHASH_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_IPA_STATUS_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_NS_RESPONSE_BODY_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_TRUE_CLIENT_PORT_value": {
+            "type": "userVariableValue",
+            "default": "%(AK_TRUE_CLIENT_PORT)"
+        },
+        "PMUSER_EW_DEBUG_KEY_value": {
+            "type": "userVariableValue",
+            "default": "7fe4a39069***"
+        },
+        "PMUSER_EWSEARCH_value": {
+            "type": "userVariableValue",
+            "default": "awesome"
+        },
+        "PMUSER_EWNEWTEXT_value": {
+            "type": "userVariableValue",
+            "default": "superAwesome"
+        },
+        "PMUSER_GRN_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_ORIGINAL_GRN_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_REFERENCE_ERROR_value": {
+            "type": "userVariableValue",
+            "default": ""
+        },
+        "PMUSER_CACHE_KEY_value": {
+            "type": "userVariableValue",
+            "default": ""
+        }
+    }
+}

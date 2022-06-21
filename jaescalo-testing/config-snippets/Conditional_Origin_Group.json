@@ -1,0 +1,85 @@
+{
+    "name": "Conditional Origin Group",
+    "children": [
+        {
+            "name": "Conditional Origin Definition",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "origin",
+                    "options": {
+                        "originType": "NET_STORAGE",
+                        "netStorage": {
+                            "downloadDomainName": "gsstrip.download.akamai.com",
+                            "cpCode": 405092,
+                            "g2oToken": "405092=6G96eY0RZK5O3Eb2xYVFzfzt8Pn8fZ37Cnv93266KVNB1U6VF1"
+                        }
+                    }
+                },
+                {
+                    "name": "caching",
+                    "options": {
+                        "behavior": "MAX_AGE",
+                        "mustRevalidate": false,
+                        "ttl": "10m"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "cloudletsOrigin",
+                    "options": {
+                        "originId": "jaescalo-origin"
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        },
+        {
+            "name": "Conditional Origin Definition",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "origin",
+                    "options": {
+                        "originType": "NET_STORAGE",
+                        "netStorage": {
+                            "downloadDomainName": "gsstrip.download.akamai.com",
+                            "cpCode": 405093,
+                            "g2oToken": "405093=n2BbffT74VJ602gFQjyJnE6O1F3jzO66IkkG9Vs7d0NEosOtUw"
+                        }
+                    }
+                },
+                {
+                    "name": "caching",
+                    "options": {
+                        "behavior": "MAX_AGE",
+                        "mustRevalidate": false,
+                        "ttl": "10m"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "cloudletsOrigin",
+                    "options": {
+                        "originId": "jaescalo-origin-2"
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        }
+    ],
+    "behaviors": [
+        {
+            "name": "allowCloudletsOrigins",
+            "options": {
+                "enabled": true,
+                "honorBaseDirectory": true,
+                "purgeOriginQueryParameter": "originId"
+            }
+        }
+    ],
+    "criteria": [],
+    "criteriaMustSatisfy": "all"
+}

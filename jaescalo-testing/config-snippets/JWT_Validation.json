@@ -1,0 +1,33 @@
+{
+    "name": "JWT Validation",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "advanced",
+            "options": {
+                "description": "Metadata to validate and extract values from JWT.",
+                "xml": "<!-- JWT extraction from header X-API-KEY -->\n<assign:extract-value>\n    <variable-name>X_API_KEY</variable-name>\n    <location>Client_Request_Header</location>\n    <location-id>X-API-KEY</location-id>\n</assign:extract-value>\n\n<!-- JWT definition 1 based on RS256 -->\n<edgeservices:jwt.definition>\n    <status>on</status>\n    <id>def1</id>\n\n    <claim>\n        <name>alg</name>\n        <header>on</header>\n        <value>RS256</value>\n    </claim>\n</edgeservices:jwt.definition>\n\n<!-- JWT definition 2 (for 2nd key) based on RS256 -->\n<edgeservices:jwt.definition>\n    <status>on</status>\n    <id>def2</id>\n\n    <claim>\n        <name>alg</name>\n        <header>on</header>\n        <value>RS256</value>\n    </claim>\n</edgeservices:jwt.definition>\n\n<!-- First public key definition. Generate with commands: \n    $ ssh-keygen -t rsa -b 2048 -m PEM -f jwt_key_1.key\n    $ openssl rsa -in jwt_key_1.key -pubout -outform PEM -out jwt_key_1.key.pub -->\n<edgeservices:jwt.key-definition>\n    <id>key1</id>\n    <value>-----BEGIN PUBLIC KEY-----\n        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx4IkplJGw+hVYclvXnVh\n        GHKoyPTHTAgJuS/lFgmckwco4LglWG2auy0/dnEH+bOxp0qbbtErWoTtYs1DZA/N\n        3kYNS6Kq5T5o57zuIYaFzh4Xsozc+8ISA6ygUbPZIDfZ7P2EEn6Cm9rrXVo2Y1KT\n        BoUzAac7/ux0KO2Ze4cpbWwDk7NbIBx0yQCz7DMlg7hoiqNKLoz2XtXwGMdYNT3n\n        FLSf56XdMmHk69rtsPx/9/D2xGM6qI23tCCSwFq9facs9j7mN37MEoj38o1UAHbb\n        2S7T2L0i6dU8OTj4RUszKzEQz0GdDUV+k9teUnGIn4u9t4l/eD+v00ykpHmfagE7\n        KwIDAQAB\n        -----END PUBLIC KEY-----</value>\n</edgeservices:jwt.key-definition>\n\n<!-- Second public key definition. -->\n<edgeservices:jwt.key-definition>\n    <id>key2</id>\n    <value>-----BEGIN PUBLIC KEY-----\n        MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApPP+M2ZXE87Y3Kkuea4t\n        MStoNDjaLM73Io2OCptIGJOBm0Sg/1O0l1dxbcvn9s6Mq/hlzLKtA1Y6V1yC5X+E\n        lvacxl3TncGUjSNNo1YSSggO3WDje+pqfMqWSR+k1H8R/tNt8PH9p2wS9NDR4PXK\n        F/d1Gb6QwJ/aQ3clQkvGRybYHPCnXLmcoXkS5YyxFthnwgqvl0+NvVCrEH9K8zgL\n        uHEO5Pk4FnDVmQ/TSiuYgMOVjZhMsWldSmE5RuwVi7igpW93S5jsxTmOAekNpq3n\n        92rMYLlpls42oxlbUSgKJZrVHMM+N0SLj8svF7kY4JrtI8AnKhAOF9tX1yS5h6v4\n        1wIDAQAB\n        -----END PUBLIC KEY-----</value>\n</edgeservices:jwt.key-definition>\n\n<!-- First JWT validation with first public key definition -->\n<match:jwt.validate token=\"%(X_API_KEY)\" result=\"false\" def-id=\"def1\" key-id=\"key1\" reason=\"JWT_REASON\">\n    <assign:variable>\n        <name>JWT_KEY_1_INVALID</name>\n        <value>true</value>\n    </assign:variable>\n</match:jwt.validate>\n\n<!-- Second/Backup JWT validation with first public key definition -->\n<match:variable name=\"JWT_REASON\" value=\"invalid_signature\">\n    <match:jwt.validate token=\"%(X_API_KEY)\" result=\"false\" def-id=\"def2\" key-id=\"key2\" reason=\"JWT_REASON\">\n        <assign:variable>\n            <name>JWT_KEY_2_INVALID</name>\n            <value>true</value>\n        </assign:variable>\n        <auth:acl.deny>%(JWT_REASON)</auth:acl.deny>\n    </match:jwt.validate>\n</match:variable>\n\n<!-- Forward some headers to the client based on extracted claims from the JWT -->\n<edgeservices:modify-outgoing-response.add-header>\n    <name>JWT_IAT</name>\n    <value>%(JWT_IAT)</value>\n</edgeservices:modify-outgoing-response.add-header>\n\n<edgeservices:modify-outgoing-response.add-header>\n    <name>JWT_AUD</name>\n    <value>%(JWT_AUD)</value>\n</edgeservices:modify-outgoing-response.add-header>"
+            },
+            "uuid": "beb11865-36c1-4b00-bbcb-c1d9a9dc33e9"
+        }
+    ],
+    "uuid": "063bafd9-1500-4ff1-88fc-ec2e0298b7bb",
+    "criteria": [
+        {
+            "name": "queryStringParameter",
+            "options": {
+                "parameterName": "jwtvalidation",
+                "matchOperator": "IS_ONE_OF",
+                "values": [
+                    "true"
+                ],
+                "matchWildcardName": false,
+                "matchCaseSensitiveName": true,
+                "matchWildcardValue": false,
+                "matchCaseSensitiveValue": true,
+                "escapeValue": false
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "all"
+}

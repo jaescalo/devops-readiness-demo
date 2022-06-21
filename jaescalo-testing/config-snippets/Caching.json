@@ -1,0 +1,68 @@
+{
+    "name": "Caching",
+    "children": [
+        {
+            "name": "Bypass Cache",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "advanced",
+                    "options": {
+                        "description": "Bypass Cache for Everything",
+                        "xml": "<cache:bypass>on</cache:bypass>"
+                    },
+                    "uuid": "43635c63-dbda-4f1e-a959-683d2b9fa178"
+                }
+            ],
+            "uuid": "136ed391-082a-43d7-9489-9d8e9011204f",
+            "criteria": [
+                {
+                    "name": "queryStringParameter",
+                    "options": {
+                        "parameterName": "bypasscache",
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "true"
+                        ],
+                        "matchWildcardName": false,
+                        "matchCaseSensitiveName": true,
+                        "matchWildcardValue": false,
+                        "matchCaseSensitiveValue": true,
+                        "escapeValue": false
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        },
+        {
+            "name": "Cache Tags",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "cacheTag",
+                    "options": {
+                        "tag": "demo"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "path",
+                    "options": {
+                        "matchOperator": "MATCHES_ONE_OF",
+                        "values": [
+                            "/demo-site/"
+                        ],
+                        "matchCaseSensitive": false,
+                        "normalize": false
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all"
+        }
+    ],
+    "behaviors": [],
+    "criteria": [],
+    "criteriaMustSatisfy": "all",
+    "uuid": "262db581-5f71-473c-a2ef-ffa497b738f6"
+}

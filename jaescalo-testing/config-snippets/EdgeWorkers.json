@@ -1,0 +1,42 @@
+{
+    "name": "EdgeWorkers",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "edgeWorker",
+            "options": {
+                "enabled": true,
+                "createEdgeWorker": "",
+                "edgeWorkerId": "4885",
+                "resourceTier": ""
+            }
+        }
+    ],
+    "criteria": [
+        {
+            "name": "path",
+            "options": {
+                "matchOperator": "MATCHES_ONE_OF",
+                "values": [
+                    "/helloworld*",
+                    "/json-inline-demo",
+                    "/ak-ref-id",
+                    "/reporting-api",
+                    "/demo-site"
+                ],
+                "matchCaseSensitive": false,
+                "normalize": false
+            }
+        },
+        {
+            "name": "hostname",
+            "options": {
+                "matchOperator": "IS_ONE_OF",
+                "values": [
+                    "failover-jaescalo.test.edgekey.net"
+                ]
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "any"
+}

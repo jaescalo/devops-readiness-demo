@@ -1,0 +1,103 @@
+{
+    "name": "Git.io Origin",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "origin",
+            "options": {
+                "originType": "CUSTOMER",
+                "hostname": "jaescalo.github.io",
+                "forwardHostHeader": "ORIGIN_HOSTNAME",
+                "cacheKeyHostname": "ORIGIN_HOSTNAME",
+                "compress": true,
+                "enableTrueClientIp": true,
+                "originCertificate": "",
+                "verificationMode": "CUSTOM",
+                "ports": "",
+                "httpPort": 80,
+                "httpsPort": 443,
+                "trueClientIpHeader": "True-Client-IP",
+                "trueClientIpClientSetting": false,
+                "originSni": true,
+                "customValidCnValues": [
+                    "{{Origin Hostname}}",
+                    "{{Forward Host Header}}",
+                    "www.github.com"
+                ],
+                "originCertsToHonor": "COMBO",
+                "standardCertificateAuthorities": [
+                    "akamai-permissive"
+                ],
+                "customCertificateAuthorities": [
+                    {
+                        "subjectCN": "DigiCert SHA2 High Assurance Server CA",
+                        "subjectAlternativeNames": [],
+                        "subjectRDNs": {
+                            "C": "US",
+                            "OU": "www.digicert.com",
+                            "CN": "DigiCert SHA2 High Assurance Server CA",
+                            "O": "DigiCert Inc"
+                        },
+                        "issuerRDNs": {
+                            "C": "US",
+                            "OU": "www.digicert.com",
+                            "CN": "DigiCert High Assurance EV Root CA",
+                            "O": "DigiCert Inc"
+                        },
+                        "notBefore": 1382443200000,
+                        "notAfter": 1855828800000,
+                        "sigAlgName": "SHA256withRSA",
+                        "publicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtuAvwiQGyG0EX9fvCmQGsn0iJmUWrkJAm87cn592Bz7DMFWHGblPlA5alB9VVrTCAiqv0JjuC0DXxNA7csgUnu+QsRGprtLIuEM62QsL1dWV9UCvyB3tTZxfV7eGUGiZ9Yra0scFH6iXydyksYKELcatpZzHGYKmhQ9eRFgqN4/9NfELCCcyWvW7i56kvVHQJ+LdO0IzowUoxLsozJqsKyMNeMZ75l5xt0o+CPuBtxYWoZ0jEk3l15IIrHWknLrNF7IeRDVlf1MlOdEcCppjGxmSdGgKN8LCUkjLOVqituFdwd2gILghopMmbxRKIUHH7W2b8kgv8wP1omiSUy9e4wIDAQAB",
+                        "publicKeyAlgorithm": "RSA",
+                        "publicKeyFormat": "X.509",
+                        "serialNumber": "6489877074546166222510380951761917343",
+                        "version": 3,
+                        "sha1Fingerprint": "a031c46782e6e6c662c2c87c76da9aa62ccabd8e",
+                        "pemEncodedCert": "-----BEGIN CERTIFICATE-----\nMIIEsTCCA5mgAwIBAgIQBOHnpNxc8vNtwCtCuF0VnzANBgkqhkiG9w0BAQsFADBs\nMQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3\nd3cuZGlnaWNlcnQuY29tMSswKQYDVQQDEyJEaWdpQ2VydCBIaWdoIEFzc3VyYW5j\nZSBFViBSb290IENBMB4XDTEzMTAyMjEyMDAwMFoXDTI4MTAyMjEyMDAwMFowcDEL\nMAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3\nLmRpZ2ljZXJ0LmNvbTEvMC0GA1UEAxMmRGlnaUNlcnQgU0hBMiBIaWdoIEFzc3Vy\nYW5jZSBTZXJ2ZXIgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2\n4C/CJAbIbQRf1+8KZAayfSImZRauQkCbztyfn3YHPsMwVYcZuU+UDlqUH1VWtMIC\nKq/QmO4LQNfE0DtyyBSe75CxEamu0si4QzrZCwvV1ZX1QK/IHe1NnF9Xt4ZQaJn1\nitrSxwUfqJfJ3KSxgoQtxq2lnMcZgqaFD15EWCo3j/018QsIJzJa9buLnqS9UdAn\n4t07QjOjBSjEuyjMmqwrIw14xnvmXnG3Sj4I+4G3FhahnSMSTeXXkgisdaScus0X\nsh5ENWV/UyU50RwKmmMbGZJ0aAo3wsJSSMs5WqK24V3B3aAguCGikyZvFEohQcft\nbZvySC/zA/WiaJJTL17jAgMBAAGjggFJMIIBRTASBgNVHRMBAf8ECDAGAQH/AgEA\nMA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIw\nNAYIKwYBBQUHAQEEKDAmMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy\ndC5jb20wSwYDVR0fBEQwQjBAoD6gPIY6aHR0cDovL2NybDQuZGlnaWNlcnQuY29t\nL0RpZ2lDZXJ0SGlnaEFzc3VyYW5jZUVWUm9vdENBLmNybDA9BgNVHSAENjA0MDIG\nBFUdIAAwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQuY29tL0NQ\nUzAdBgNVHQ4EFgQUUWj/kK8CB3U8zNllZGKiErhZcjswHwYDVR0jBBgwFoAUsT7D\naQP4v0cB1JgmGggC72NkK8MwDQYJKoZIhvcNAQELBQADggEBABiKlYkD5m3fXPwd\naOpKj4PWUS+Na0QWnqxj9dJubISZi6qBcYRb7TROsLd5kinMLYBq8I4g4Xmk/gNH\nE+r1hspZcX30BJZr01lYPf7TMSVcGDiEo+afgv2MW5gxTs14nhr9hctJqvIni5ly\n/D6q1UEL2tU2ob8cbkdJf17ZSHwD2f2LSaCYJkJA69aSEaRkCldUxPUd1gJea6zu\nxICaEnL6VpPX/78whQYwvwt/Tv9XBZ0k7YXDK/umdaisLRbvfXknsuvCnQsH6qqF\n0wGjIChBWUMo0oHjqvbsezt3tkBigAVBRQHvFwY+3sAzm2fTYS5yh+Rp/BIAV0Ae\ncPUeybQ=\n-----END CERTIFICATE-----\n",
+                        "canBeLeaf": true,
+                        "canBeCA": true,
+                        "selfSigned": false
+                    }
+                ],
+                "customCertificates": []
+            }
+        },
+        {
+            "name": "rewriteUrl",
+            "options": {
+                "behavior": "REWRITE",
+                "targetUrl": "/"
+            }
+        },
+        {
+            "name": "baseDirectory",
+            "options": {
+                "value": "/"
+            }
+        }
+    ],
+    "criteria": [
+        {
+            "name": "path",
+            "options": {
+                "matchOperator": "MATCHES_ONE_OF",
+                "values": [
+                    "/git*"
+                ],
+                "matchCaseSensitive": false,
+                "normalize": false
+            }
+        },
+        {
+            "name": "filename",
+            "options": {
+                "matchOperator": "IS_ONE_OF",
+                "values": [
+                    "eddie.jpg"
+                ],
+                "matchCaseSensitive": true
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "any"
+}

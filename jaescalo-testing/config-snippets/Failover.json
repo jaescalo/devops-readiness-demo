@@ -1,0 +1,205 @@
+{
+    "name": "Failover",
+    "children": [
+        {
+            "name": "Artificially Break Connection",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "breakConnection",
+                    "options": {
+                        "enabled": true
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "queryStringParameter",
+                    "options": {
+                        "parameterName": "breakconnection",
+                        "matchCaseSensitiveName": false,
+                        "matchWildcardName": false,
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "true"
+                        ],
+                        "matchCaseSensitiveValue": false,
+                        "matchWildcardValue": false,
+                        "escapeValue": false
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": "Simulate that your origin is unavailable by breaking the connection to the origin when query string parameter breakconnection is equal to true"
+        },
+        {
+            "name": "Serve Sorry Page from Alternate Hostname",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "failAction",
+                    "options": {
+                        "contentCustomPath": true,
+                        "contentHostname": "failover-jaescalo.test.edgekey.net",
+                        "contentPath": "/failaction/maintenance.html?akamai-error={{user.PMUSER_REFERENCE_ERROR}}",
+                        "preserveQueryString": false,
+                        "enabled": true,
+                        "actionType": "RECREATED_CO"
+                    }
+                },
+                {
+                    "name": "downstreamCache",
+                    "options": {
+                        "behavior": "BUST"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "originTimeout",
+                    "options": {
+                        "matchOperator": "ORIGIN_TIMED_OUT"
+                    }
+                },
+                {
+                    "name": "matchResponseCode",
+                    "options": {
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "500",
+                            "503",
+                            "504"
+                        ]
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": ""
+        },
+        {
+            "name": "Disable Failover",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "failAction",
+                    "options": {
+                        "enabled": false
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "queryStringParameter",
+                    "options": {
+                        "parameterName": "disablefailover",
+                        "matchCaseSensitiveName": false,
+                        "matchWildcardName": false,
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "true"
+                        ],
+                        "matchCaseSensitiveValue": false,
+                        "matchWildcardValue": false,
+                        "escapeValue": false
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": "Simulate that your origin is unavailable by breaking the connection to the origin when query string parameter breakconnection is equal to true"
+        },
+        {
+            "name": "NS Base Path",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "baseDirectory",
+                    "options": {
+                        "value": "/jaescalo/"
+                    }
+                },
+                {
+                    "name": "setVariable",
+                    "options": {
+                        "variableName": "PMUSER_REFERENCE_ERROR",
+                        "valueSource": "EXTRACT",
+                        "transform": "NONE",
+                        "extractLocation": "QUERY_STRING",
+                        "queryParameterName": "akamai-error"
+                    }
+                },
+                {
+                    "name": "rewriteUrl",
+                    "options": {
+                        "behavior": "REGEX_REPLACE",
+                        "keepQueryString": false,
+                        "matchMultiple": true,
+                        "matchRegex": "(\\/\\b.*)(\\?\\b.*$)",
+                        "targetRegex": "$1"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "hostname",
+                    "options": {
+                        "matchOperator": "IS_ONE_OF",
+                        "values": [
+                            "failover-jaescalo.test.edgekey.net"
+                        ]
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "any",
+            "comments": "Simulate that your origin is unavailable by breaking the connection to the origin when query string parameter breakconnection is equal to true"
+        },
+        {
+            "name": "EW Case based on GRN ERR",
+            "children": [],
+            "behaviors": [
+                {
+                    "name": "baseDirectory",
+                    "options": {
+                        "value": "/jaescalo/"
+                    }
+                }
+            ],
+            "criteria": [
+                {
+                    "name": "hostname",
+                    "options": {
+                        "matchOperator": "IS_NOT_ONE_OF",
+                        "values": [
+                            "failover-jaescalo.test.edgekey.net"
+                        ]
+                    }
+                },
+                {
+                    "name": "path",
+                    "options": {
+                        "matchOperator": "MATCHES_ONE_OF",
+                        "values": [
+                            "/failaction/maintenance.html"
+                        ],
+                        "matchCaseSensitive": false,
+                        "normalize": false
+                    }
+                }
+            ],
+            "criteriaMustSatisfy": "all",
+            "comments": "Simulate that your origin is unavailable by breaking the connection to the origin when query string parameter breakconnection is equal to true"
+        }
+    ],
+    "behaviors": [
+        {
+            "name": "advanced",
+            "options": {
+                "description": "Capture Akamai Reference Error from default header",
+                "xml": "<!-- REF ERROR CAPTURE -->\n<edgeservices:modify-outgoing-response.add-error-reference-header>on</edgeservices:modify-outgoing-response.add-error-reference-header>\n\n<match:metadata-stage value=\"client-response client-done\">\n    <match:response.header name=\"X-Reference-Error\">\n        <assign:extract-value>\n            <location>Response_Header</location>\n            <location-id>X-Reference-Error</location-id>\n            <variable-name>PMUSER_REFERENCE_ERROR</variable-name>\n        </assign:extract-value>\n    </match:response.header>\n</match:metadata-stage>"
+            },
+            "uuid": "1c06b253-813a-45a7-8d58-5283ac59cfc9"
+        }
+    ],
+    "uuid": "397dd871-a6b7-42ae-a6b8-a22f6271bcc3",
+    "criteria": [],
+    "criteriaMustSatisfy": "all"
+}

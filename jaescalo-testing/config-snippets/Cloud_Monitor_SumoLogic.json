@@ -1,0 +1,52 @@
+{
+    "name": "Cloud Monitor SumoLogic",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "setVariable",
+            "options": {
+                "variableName": "PMUSER_REFERERHASH",
+                "valueSource": "EXTRACT",
+                "transform": "MD5",
+                "extractLocation": "CLIENT_REQUEST_HEADER",
+                "headerName": "Referer"
+            }
+        },
+        {
+            "name": "edgeConnect",
+            "options": {
+                "enabled": true,
+                "apiConnector": "DEFAULT",
+                "apiDataElements": [
+                    "HTTP",
+                    "REQUEST_HEADER",
+                    "RESPONSE_HEADER",
+                    "NETWORK_PERFORMANCE",
+                    "APM",
+                    "GEO",
+                    "NETWORK_V1",
+                    "SEC_APP_V2",
+                    "SEC_RATE_WARN_V2",
+                    "SEC_RATE_DENY_V2"
+                ],
+                "destinationHostname": "jaescalo-cloudmon.test.edgekey.net",
+                "destinationPath": "/receiver/v1/http/ZaVnC4dhaV3DwlPuhVMxWEUMuYTRoSmD_AKM2lYGVug2H35YBzF5Dlru_36oXwrXSe3p11TyVkHqx0mBlz8zH2EeqIQUI6QXT0YK_Z2esHR-CgMh6Ru1Vw==",
+                "overrideAggregateSettings": true,
+                "aggregateTime": "60s",
+                "aggregateLines": "5",
+                "aggregateSize": "100KB"
+            }
+        },
+        {
+            "name": "advanced",
+            "options": {
+                "description": "CloudMon custom data set",
+                "xml": "<match:metadata-stage value=\"client-response client-done\">\n\t<match:variable name=\"DO_EDGECONNECT_PUBLISH\" value=\"on\">\n\t    <match:variable name=\"ENT_EDGECONNECT_NO_DLR_NEEDED\" value=\"on\" result=\"false\">\n\t        <assign:variable>\n\t            <name>EDGECONNECT_CUSTOM_DATA</name>\n\t            <value>{\"CustomData\":{\"cache-key\":\"%(AK_ARL)\",\"hashreferer\":\"%(PMUSER_REFERERHASH)\"}}</value>\n\t        </assign:variable>\n\t    </match:variable>\n\t</match:variable>\n</match:metadata-stage>"
+            },
+            "uuid": "943492f2-5f1e-4b3f-9f25-4f8ad6fb523c"
+        }
+    ],
+    "uuid": "4e4f5528-13cb-4551-9f6d-af8c102906db",
+    "criteria": [],
+    "criteriaMustSatisfy": "all"
+}

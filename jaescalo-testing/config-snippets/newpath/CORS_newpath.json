@@ -1,0 +1,34 @@
+{
+    "name": "CORS New Path",
+    "children": [],
+    "behaviors": [
+        {
+            "name": "corsSupport",
+            "options": {
+                "enabled": true,
+                "allowOrigins": "ANY",
+                "allowCredentials": false,
+                "allowHeaders": "ANY",
+                "methods": [
+                    "GET"
+                ],
+                "exposeHeaders": [],
+                "preflightMaxAge": "600s"
+            }
+        }
+    ],
+    "criteria": [
+        {
+            "name": "path",
+            "options": {
+                "matchOperator": "MATCHES_ONE_OF",
+                "values": [
+                    "/newpath*"
+                ],
+                "matchCaseSensitive": false,
+                "normalize": false
+            }
+        }
+    ],
+    "criteriaMustSatisfy": "all"
+}

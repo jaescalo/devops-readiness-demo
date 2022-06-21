@@ -1,0 +1,29 @@
+[
+    {
+        "cnameType": "CUSTOM",
+        "edgeHostnameId": 4874468,
+        "cnameFrom": "failover-jaescalo.test.edgekey.net",
+        "cnameTo": "jaescalo.test.edgekey.net",
+        "certProvisioningType": "CPS_MANAGED"
+    },
+    {
+        "cnameType": "CUSTOM",
+        "edgeHostnameId": 4718771,
+        "cnameFrom": "ipa-www.jaescalo.com",
+        "cnameTo": "www.jaescalo.com.edgesuite.net",
+        "certProvisioningType": "CPS_MANAGED"
+    },
+    {
+        "cnameType": "CUSTOM",
+        "cnameFrom": "jaescalo.test.edgekey-staging.net",
+        "cnameTo": "jaescalo.test.edgekey-staging.net",
+        "certProvisioningType": "CPS_MANAGED"
+    },
+    {
+        "cnameType": "CUSTOM",
+        "edgeHostnameId": 4874468,
+        "cnameFrom": "jaescalo.test.edgekey.net",
+        "cnameTo": "jaescalo.test.edgekey.net",
+        "certProvisioningType": "CPS_MANAGED"
+    }
+]
